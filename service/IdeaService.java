@@ -57,7 +57,7 @@ public class IdeaService {
 	}
 
 	private void mod() {
-
+		
 	}
 
 	private void del() {
@@ -87,6 +87,7 @@ public class IdeaService {
 	}
 
 	private void search() {
+		System.out.println("검색할 아이디어 제목을 입력하세요");
 		
 
 	}

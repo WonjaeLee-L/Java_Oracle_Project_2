@@ -105,6 +105,23 @@ public class IdeaDAO {
 			}
 		}
 	}
+	
+	public ArrayList<IdeaDTO> selectOne() {
+		ArrayList<IdeaDTO> ilist = new ArrayList<IdeaDTO>();
+		if(conn()) {
+			try {
+				String sql = "select * from openidea where title like '%?%'";
+			} catch (Exception e) {
+			} finally {
+				try {
+					if(conn!=null) {
+						conn.close();
+					}
+				} catch (Exception e2) {
+				}
+			}
+		}
+	}
 
 	public ArrayList<IdeaDTO> selectNumTitle() {
 		ArrayList<IdeaDTO> ilist = new ArrayList<IdeaDTO>();
