@@ -41,7 +41,9 @@ public class IdeaDAO {
 
 	private boolean conn() {
 		try {
+			// 조건 1. connection 확인
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "system", "11111111");
+			System.out.println("정상 동작 확인");
 			return true;
 		} catch (Exception e) {
 		}
@@ -50,14 +52,16 @@ public class IdeaDAO {
 
 	public void insert(IdeaDTO idea) {
 		if (conn()) {
+			// 조건 3. try-catch-finally
 			try {
 				String sql = "insert into openidea values (idea_seq.nextval,?,?,?)";
 				// sql에서와 다르게 java에서 시퀀스 사용은 시퀀스명.nextval
 				PreparedStatement prmt = conn.prepareStatement(sql);
+				// 조건 4. Mapping
 				prmt.setString(1, idea.getTitle());
 				prmt.setString(2, idea.getMemo());
 				prmt.setString(3, idea.getName());
-
+				// 조건 5. 쿼리 실행 확인
 				int resultInt = prmt.executeUpdate();
 				if (resultInt > 0) {
 					conn.commit();
@@ -68,6 +72,7 @@ public class IdeaDAO {
 				e.printStackTrace();
 			} finally {
 				try {
+					// 조건 2. connection 반납
 					if (conn != null) {
 						conn.close();
 					}
