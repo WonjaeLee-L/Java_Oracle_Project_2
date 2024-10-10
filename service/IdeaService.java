@@ -87,8 +87,14 @@ public class IdeaService {
 	}
 
 	private void search() {
+		Scanner in = new Scanner(System.in);
 		System.out.println("검색할 아이디어 제목을 입력하세요");
+		String idea = in.nextLine();
+		ArrayList<IdeaDTO> sidea = ideadao.selectOne(idea);
 		
+		for (IdeaDTO one : sidea) {
+			System.out.println(one.toString());
+		}
 
 	}
 

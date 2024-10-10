@@ -85,11 +85,11 @@ public class IdeaDAO {
 				String sql = "delete from openidea where num = ?";
 				PreparedStatement prmt = conn.prepareStatement(sql);
 				prmt.setInt(1, delNum);
-				
+
 				int resultInt = prmt.executeUpdate();
-				if( resultInt > 0) {
+				if (resultInt > 0) {
 					conn.commit();
-				}else {
+				} else {
 					conn.rollback();
 				}
 
@@ -99,28 +99,41 @@ public class IdeaDAO {
 				try {
 					if (conn != null) {
 						conn.close();
-					} 
+					}
 				} catch (Exception e2) {
 				}
 			}
 		}
 	}
-	
-	public ArrayList<IdeaDTO> selectOne() {
+
+	public ArrayList<IdeaDTO> selectOne(String idea) {
 		ArrayList<IdeaDTO> ilist = new ArrayList<IdeaDTO>();
-		if(conn()) {
+		if (conn()) {
 			try {
 				String sql = "select * from openidea where title like '%?%'";
+				PreparedStatement prmt = conn.prepareStatement(sql);
+				prmt.setString(1, idea);
+				ResultSet rs = prmt.executeQuery();
+				while (rs.next()) {
+					IdeaDTO idto = new IdeaDTO();
+					idto.setNum(rs.getInt("num"));
+					idto.setTitle(rs.getString("title"));
+					idto.setMemo(rs.getString("memo"));
+					idto.setName(rs.getString("name"));
+					ilist.add(idto);
+				}
 			} catch (Exception e) {
+				System.out.println("21");
 			} finally {
 				try {
-					if(conn!=null) {
+					if (conn != null) {
 						conn.close();
 					}
 				} catch (Exception e2) {
 				}
 			}
 		}
+		return ilist;
 	}
 
 	public ArrayList<IdeaDTO> selectNumTitle() {
